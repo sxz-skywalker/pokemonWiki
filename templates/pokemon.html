@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pokemon List</title>
+</head>
+<body class="dark-edition">
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-header card-header-primary">
+                <h4 class="card-title">Pokemons</h4>
+            </div>
+            <div class="card-body">
+                <ul>
+                    {% for pokemon in pokemons %}
+                    <li>
+                        <strong>{{ pokemon.name }}</strong> ({{ pokemon.type }}) - {{ pokemon.description }}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
