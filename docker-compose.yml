@@ -22,8 +22,11 @@ services:
       - SECRET_KEY=${SECRET_KEY}
       - FLASK_ENV=${FLASK_ENV}
       - FLASK_APP=${FLASK_APP}
+      - FLASK_DEBUG=1
     depends_on:
       - db
+    volumes:
+      - .:/app
 #    command: >
 #      /bin/sh -c "
 #      flask db init &&
