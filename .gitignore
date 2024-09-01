@@ -1,0 +1,5 @@
+.gitattributes
+.venv/
+.idea/
+*.log
+**/__pycache__
