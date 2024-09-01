@@ -1,25 +1,55 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Pokemon List</title>
-</head>
-<body class="dark-edition">
-    <div class="container-fluid">
-        <div class="card">
-            <div class="card-header card-header-primary">
-                <h4 class="card-title">Pokemons</h4>
-            </div>
-            <div class="card-body">
-                <ul>
-                    {% for pokemon in pokemons %}
-                    <li>
-                        <strong>{{ pokemon.name }}</strong> ({{ pokemon.type }}) - {{ pokemon.description }}
-                    </li>
-                    {% endfor %}
-                </ul>
+{% extends 'layout.html' %}
+
+{% block head %}
+    <link href="{{ url_for('static', filename='css/owl.carousel.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/owl.theme.default.min.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/4.5.6/css/ionicons.min.css">
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="container pokemons">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="featured-carousel owl-carousel">
+                {% for i in range(0, pokemons|length, 2) %}
+                    <div class="item">
+                        <div class="row">
+                            {% for j in range(i, i + 2) %}
+                                {% if pokemons[j] is defined %}
+                                    <div class="testimony-wrap py-4">
+                                        <div class="text">
+                                            <div class="d-flex align-items-center">
+                                                <div class="user-img" style="background-image: url({{ url_for('static', filename='images/pokemons/' + '{:03d}'.format(pokemons[j].id) + '.png') }})"></div>
+                                                <div class="pl-3">
+                                                    <p class="name pixelify-sans">{{ pokemons[j].name }}</p>
+                                                    <span class="position suse-600">
+                                                        {{ ", ".join([pokemons[j].type1.value, pokemons[j].type2.value]
+                                                            if pokemons[j].type2 else [pokemons[j].type1.value]) }}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="stats suse">
+                                                <div class="stat"><strong>TOTAL</strong> <span>{{ pokemons[j].total }}</span></div>
+                                                <div class="stat"><strong>HP</strong> <span>{{ pokemons[j].hp }}</span></div>
+                                                <div class="stat"><strong>ATTACK</strong> <span>{{ pokemons[j].attack }}</span></div>
+                                                <div class="stat"><strong>DEFENSE</strong> <span>{{ pokemons[j].defense }}</span></div>
+                                                <div class="stat"><strong>GENERATION</strong> <span>{{ pokemons[j].generation }} GEN</span></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endfor %}
             </div>
         </div>
     </div>
-</body>
-</html>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+</script>
+{% endblock %}

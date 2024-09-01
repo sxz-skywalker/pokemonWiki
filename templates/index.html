@@ -1,20 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Pokemon Wiki</title>
-    <link href="{{ url_for('static', filename='css/custom.css') }}" rel="stylesheet">
-</head>
-<body class="dark-edition">
-    <div class="container">
-        <div class="card">
-            <div class="card-header card-header-primary">
-                <h4 class="card-title">Pokemon Wiki</h4>
-            </div>
-            <div class="card-body">
-                <p><a href="{{ url_for('pokemon.list_pokemon') }}">View Pokemon List</a></p>
-            </div>
-        </div>
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="container main">
+    <div>
+        <button class="enter pixelify-sans">
+            enter
+        </button>
     </div>
-</body>
-</html>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+$('.enter').on('click', () => {
+    location.href = '/pokemon'
+})
+</script>
+{% endblock %}
