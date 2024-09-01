@@ -2,7 +2,7 @@
 
 	"use strict";
 
-	var fullHeight = function() {
+	const fullHeight = function() {
 
 		$('.js-fullheight').css('height', $(window).height());
 		$(window).resize(function(){
@@ -12,7 +12,7 @@
 	};
 	fullHeight();
 
-	var carousel = function() {
+	const carousel = function() {
 		$('.featured-carousel').owlCarousel({
 	    loop: false,
 	    autoplay: true,
@@ -26,16 +26,13 @@
 	    navText : ["<span class='ion-ios-arrow-back'></span>","<span class='ion-ios-arrow-forward'></span>"],
 	    responsive:{
 	      0:{
-	        items:1,
-	        rows:2
+	        items:1
 	      },
 	      600:{
-	        items:2,
-		  	rows:2
+	        items:2
 	      },
 	      1000:{
-	        items:3,
-			rows:2
+	        items:3
 	      }
 	    }
 		});
