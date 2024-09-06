@@ -21,7 +21,6 @@ class Pokemon:
     description: Optional[str] = None
 
 
-# list_pokemon 함수
 def get_pokemons():
     connection = make_connection()
     pokemons = []

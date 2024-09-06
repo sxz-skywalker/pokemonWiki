@@ -10,7 +10,7 @@ def make_connection():
         user = config.DATABASE_USER,
         password = config.DATABASE_PASSWORD,
         database = config.DATABASE_SCHEMA,
-        charset='utf8mb4',
+        charset='utf8mb4',  # utf8 문자셋 사용
         cursorclass=pymysql.cursors.DictCursor
 )
 # MySQL 서버가 준비될 때까지 재시도
@@ -53,25 +53,24 @@ def merge_data(pokemons):
     connection = make_connection()
     try:
         with connection.cursor() as cursor:
-            for pokemon_data in pokemons:
-                # type2가 빈 문자열일 경우 None으로 변경
-                if pokemon_data['type2'] == '':
-                    pokemon_data['type2'] = None
+            # SQL 쿼리를 생성하기 위한 string 값 생성
+            columns = ', '.join(pokemons[0].keys())  # 첫 번째 포켓몬의 키를 기준으로 컬럼 insert문 컬럼 생성
+            placeholders = ', '.join(['%s'] * len(pokemons[0]))  # 각 값에 대한 플레이스홀더 생성
+            updates = ', '.join([f"{key}=VALUES({key})" for key in pokemons[0]])   # 첫 번째 포켓몬의 키를 기준으로 컬럼 update문 key, value 페어 생성
 
-                # sql 생성을 위한 string 값 생성
-                columns = ', '.join(pokemon_data.keys())
-                placeholders = ', '.join(['%s'] * len(pokemon_data))
-                updates = ', '.join([f"{key}=VALUES({key})" for key in pokemon_data])
-
-                # INSERT 또는 UPDATE 쿼리 작성 (MERGE와 유사한 동작)
-                sql = f"""
+            # 여러 행의 데이터를 한 번에 처리할 수 있도록 INSERT 쿼리 작성
+            sql = f"""
                     INSERT INTO pokemon ({columns})
-                    VALUES ({placeholders})
+                    VALUES {', '.join(['(%s)' % placeholders for _ in pokemons])}
                     ON DUPLICATE KEY UPDATE {updates}
                 """
+            print('sql!!', sql)
 
-                # 쿼리 실행
-                cursor.execute(sql, tuple(pokemon_data.values()))
+            # 데이터를 리스트로 변환
+            values = [value for p in pokemons for value in p.values()]
+
+            # 데이터 merge
+            cursor.execute(sql, values)
 
         # 변경 사항 커밋
         connection.commit()
