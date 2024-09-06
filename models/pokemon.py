@@ -1,18 +1,45 @@
 from models.pokemon_type import PokemonType
-from . import db
+from typing import Optional
+from dataclasses import dataclass
+from utils.db_intializer import make_connection
 
 
-class Pokemon(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), nullable=False)
-    type1 = db.Column(db.Enum(PokemonType), nullable=False)
-    type2 = db.Column(db.Enum(PokemonType), nullable=True)
-    total = db.Column(db.Integer, nullable=False)
-    hp = db.Column(db.Integer, nullable=False)
-    attack = db.Column(db.Integer, nullable=False)
-    defense = db.Column(db.Integer, nullable=False)
-    speed = db.Column(db.Integer, nullable=False)
-    sp_atk = db.Column(db.Integer, nullable=False)
-    sp_def = db.Column(db.Integer, nullable=False)
-    generation = db.Column(db.Integer, nullable=False)
-    description = db.Column(db.Text, nullable=True)
+@dataclass
+class Pokemon:
+    id: int
+    name: str
+    type1: PokemonType
+    total: int
+    hp: int
+    attack: int
+    defense: int
+    speed: int
+    sp_atk: int
+    sp_def: int
+    generation: int
+    type2: Optional[PokemonType] = None
+    description: Optional[str] = None
+
+
+# list_pokemon 함수
+def get_pokemons():
+    connection = make_connection()
+    pokemons = []
+    try:
+        with connection.cursor() as cursor:
+            sql = "SELECT * FROM pokemon"
+            cursor.execute(sql)
+            result = cursor.fetchall()
+
+            # pokemon 객체로 변환
+            pokemons = [
+                Pokemon(**{
+                    **row,
+                    "type1": PokemonType(row["type1"]),
+                    "type2": PokemonType(row["type2"]) if row["type2"] else None
+                })
+                for row in result
+            ]
+    finally:
+        connection.close()
+    return pokemons
