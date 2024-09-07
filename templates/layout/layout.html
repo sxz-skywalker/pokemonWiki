@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Pokemon Wiki</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    {% include 'layout/include.html' %}
+    {% block head %}{% endblock %}
+</head>
+<body>
+    <header>
+        <!-- 공통 헤더 -->
+        {% include 'layout/header.html' %}
+    </header>
+
+    <section class="ftco-section">
+        {% block content %}{% endblock %}
+    </section>
+
+    <footer>
+        <!-- 공통 푸터 -->
+    </footer>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,356 @@
+
+.widget-26 {
+  color: #3c4142;
+  font-weight: 400;
+}
+
+.widget-26 tr:first-child td {
+  border: 0;
+}
+
+.widget-26 .widget-26-job-emp-img img {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+}
+
+.widget-26 .title {
+  min-width: 200px;
+}
+
+.widget-26 .title a {
+  font-weight: 400;
+  font-size: 0.875rem;
+  color: #3c4142;
+  line-height: 1.5;
+}
+
+.widget-26 .title a:hover {
+  color: #F0A599;
+  text-decoration: none;
+}
+
+.widget-26 .title .employer-name {
+  margin: 0;
+  line-height: 1.5;
+  font-weight: 400;
+  color: #3c4142;
+  font-size: 0.8125rem;
+  color: #3c4142;
+}
+
+.widget-26 .title .employer-name:hover {
+  color: #68CBD7;
+  text-decoration: none;
+}
+
+.widget-26 .title .time {
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.widget-26 .operator {
+  min-width: 100px;
+  font-weight: 400;
+}
+
+.widget-26 .operator p {
+  line-height: 1.5;
+  color: #3c4142;
+  font-size: 0.8125rem;
+}
+
+.widget-26 .operator .location {
+  color: #3c4142;
+}
+
+.widget-26 .date {
+  min-width: 70px;
+  font-weight: 400;
+  color: #3c4142;
+  font-size: 0.8125rem;
+}
+
+.widget-26 .widget-26-job-starred svg {
+  width: 20px;
+  height: 20px;
+  color: #fd8b2c;
+}
+
+.widget-26 .widget-26-job-starred svg.starred {
+  fill: #fd8b2c;
+}
+.bg-soft-base {
+  background-color: #e1f5f7;
+}
+.bg-soft-warning {
+    background-color: #fff4e1;
+}
+.bg-soft-success {
+    background-color: #d1f6f2;
+}
+.bg-soft-danger {
+    background-color: #fedce0;
+}
+.bg-soft-info {
+    background-color: #d7efff;
+}
+
+
+.search-form {
+  width: 100%;
+  margin: 0 auto;
+  margin-top: 12rem;
+}
+
+.search-form input, .create-form input {
+  height: 100%;
+  background: transparent;
+  border: 0;
+  display: block;
+  width: 100%;
+  padding: 1rem;
+  height: 100%;
+  font-size: 1rem;
+}
+
+.search-form select, .create-form select{
+  background: transparent;
+  border: 0;
+  padding: 1rem;
+  height: 100%;
+  font-size: 1rem;
+}
+
+.search-form input:focus, .search-form select:focus,
+.create-form input:focus-visible, .create-form select:focus,
+.create-form textarea:focus-visible {
+  border: 0;
+    outline: 0;
+  outline-offset: 0px;
+}
+
+.search-form button, .create-form button {
+  height: 100%;
+  width: 100%;
+  font-size: 1rem;
+}
+
+.search-form button svg {
+  width: 24px;
+  height: 24px;
+}
+
+.search-body {
+  margin-bottom: 1.5rem;
+  min-height: 150px;
+  /*height: 120px;*/
+}
+
+.search-body .search-filters .filter-list {
+  margin-bottom: 1.3rem;
+}
+
+.search-body .search-filters .filter-list .title {
+  color: #3c4142;
+  margin-bottom: 1rem;
+}
+
+.search-body .search-filters .filter-list .filter-text {
+  color: #727686;
+}
+
+.search-body .search-result .result-header {
+  margin-bottom: 2rem;
+}
+
+.search-body .search-result .result-header .records {
+  color: #3c4142;
+}
+
+.search-body .search-result .result-header .result-actions {
+  text-align: right;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.search-body .search-result .result-header .result-actions .result-sorting {
+  display: flex;
+  align-items: center;
+}
+
+.search-body .search-result .result-header .result-actions .result-sorting span {
+  flex-shrink: 0;
+  font-size: 0.8125rem;
+}
+
+.search-body .search-result .result-header .result-actions .result-sorting select {
+  color: #68CBD7;
+}
+
+.search-body .search-result .result-header .result-actions .result-sorting select option {
+  color: #3c4142;
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+  .search-body .search-filters {
+    display: flex;
+  }
+  .search-body .search-filters .filter-list {
+    margin-right: 1rem;
+  }
+}
+
+.card-margin {
+    margin-bottom: 1.875rem;
+}
+
+@media (min-width: 992px){
+.col-lg-2 {
+    flex: 0 0 16.66667%;
+    max-width: 16.66667%;
+}
+}
+
+.card-margin {
+    margin-bottom: 1.875rem;
+}
+.card {
+    border: 0;
+    box-shadow: 0px 0px 10px 0px rgba(82, 63, 105, 0.1);
+    -webkit-box-shadow: 0px 0px 10px 0px rgba(82, 63, 105, 0.1);
+    -moz-box-shadow: 0px 0px 10px 0px rgba(82, 63, 105, 0.1);
+    -ms-box-shadow: 0px 0px 10px 0px rgba(82, 63, 105, 0.1);
+}
+.card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #ffffff;
+    background-clip: border-box;
+    border: 1px solid #e6e4e9;
+    border-radius: 8px;
+}
+
+.page-item.active .page-link {
+    z-index: 3;
+    color: #fff;
+    background-color: #FFBE98; /*DAF1DE*/
+    border-color: #FFBE98;
+}
+
+.page-link {
+    color: #F0A599;
+}
+.page-link:hover {
+    color: #83b582;
+}
+
+.result-header {
+    display: flex;
+    justify-content: end;
+}
+
+@media (min-width: 500px) {
+    .container {
+        max-width: 800px;
+    }
+}
+
+.forum {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+}
+
+.forum .row {
+    display: flex;
+    align-content: center;
+}
+
+.pagination-area {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    align-items: center;
+}
+
+.create-icon {
+    color: #c5c5c5;
+    margin-right: 20px;
+    font-size: 20px;
+    padding: 8px;
+    border-radius: 5px;
+    /*border: 1px solid #dee2e6;*/
+    background-color: white;
+}
+
+.create-icon-btn, .create-icon-btn:focus {
+  border: none;
+  outline: none;
+  background-color: inherit ;
+  cursor: pointer;
+  display: flex;
+}
+
+.pagination {
+    margin-left: 40px;
+}
+
+.detail-title {
+    display: flex;
+    flex-direction: row;
+}
+
+.create-form {
+  width: 100%;
+}
+
+.create-form textarea {
+  height: 100%;
+  background: transparent;
+  border: 0;
+  display: block;
+  width: 100%;
+  padding: 1rem;
+  height: 100%;
+  font-size: 1rem;
+  resize: none;
+}
+
+.forum-detail {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+}
+
+.forum-detail-wrapper {
+    margin-top: 15rem;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+}
+
+.create-form-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.forum-detail select:disabled {
+    background-color: white;
+}
+
+.no-result {
+    display: none;
+    margin-top: 10px;
+    width: 100%;
+    text-align: center;
+    color: #6c757d;
+}

@@ -1,9 +1,8 @@
-{% extends 'layout.html' %}
+{% extends 'layout/layout.html' %}
 
 {% block head %}
     <link href="{{ url_for('static', filename='css/owl.carousel.min.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='css/owl.theme.default.min.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/4.5.6/css/ionicons.min.css">
     <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
 {% endblock %}
 
@@ -50,6 +49,7 @@
 {% endblock %}
 
 {% block scripts %}
+<script src="{{ url_for('static', filename='js/pokemon.js') }}"></script>
 <script>
 </script>
 {% endblock %}

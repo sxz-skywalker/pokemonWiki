@@ -33,7 +33,12 @@ def initialize_db():
             schema_file = os.path.join(os.path.dirname(__file__), '../sql', 'schema.sql')
             with open(schema_file, 'r') as file:
                 schema_sql = file.read()
-                cursor.execute(schema_sql)
+                sql_list = schema_sql.split(';') # SQL 분리
+                # SQL 리스트 만들기
+                sql_list = [command.strip() for command in sql_list if command.strip()]
+                # 각 SQL 실행
+                for sql in sql_list:
+                    cursor.execute(sql)
             connection.commit()
             print("The tables were created successfully")
     finally:

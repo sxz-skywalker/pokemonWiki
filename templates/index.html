@@ -1,4 +1,4 @@
-{% extends 'layout.html' %}
+{% extends 'layout/layout.html' %}
 
 {% block content %}
 <div class="container main">
@@ -13,7 +13,7 @@
 {% block scripts %}
 <script>
 $('.enter').on('click', () => {
-    location.href = '/pokemon'
+    location.href = '/pokemons'
 })
 </script>
 {% endblock %}

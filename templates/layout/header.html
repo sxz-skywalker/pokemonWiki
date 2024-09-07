@@ -1,0 +1,40 @@
+<div class="menu-header">
+    {% if show_back_btn is defined %}
+        <button onclick="location.href='/forums'"><ion-icon name="arrow-back" class="back-btn"></ion-icon></button>
+    {% endif %}
+    <button style="float: right;"><ion-icon name="menu" class="menu-open-btn "></ion-icon></button>
+</div>
+<div class="sidebar">
+    <div class="menu-close">
+        <button><ion-icon name="close" class="menu-close-btn"></ion-icon></button>
+    </div>
+    <ul class="menu-ul pixelify-sans">
+        <li><a href="/pokemons">Wiki</a></li>
+        <li><a href="/forums">Forum</a></li>
+    </ul>
+</div>
+<div class="overlay"></div>
+
+<script>
+
+const toggleMenu = () => {
+    const isOpen = $(".overlay").css("display") !== 'none';
+    $(".overlay").toggle()
+    $(".sidebar").animate({
+        "margin-right": "0",
+        "right": isOpen ? "-500" : "0"
+    }, 500);
+}
+
+$(() => {
+    $(".menu-close-btn, .menu-open-btn").off('click').on('click', () => {
+        console.log('close')
+        toggleMenu()
+    });
+    const isShowBackBtn = '{{ show_back_btn is defined }}' === 'True'
+    isShowBackBtn ? $('.show_back_btn').show() : $('.show_back_btn').hide();
+    $('.menu-header').css('justify-content', isShowBackBtn ? 'space-between' : 'end');
+
+});
+
+</script>
