@@ -13,7 +13,7 @@ app.config.from_object(config)
 
 with app.app_context():
     # DB 초기화
-    db_intializer.run(app)
+    db_intializer.run()
 
 
 # 개별 선언한 route들을 BluePrint 등록

@@ -69,7 +69,6 @@ def merge_data(pokemons):
                     VALUES {', '.join(['(%s)' % placeholders for _ in pokemons])}
                     ON DUPLICATE KEY UPDATE {updates}
                 """
-            print('sql!!', sql)
 
             # 데이터를 리스트로 변환
             values = [value for p in pokemons for value in p.values()]
@@ -84,7 +83,7 @@ def merge_data(pokemons):
 
 
 # DB 초기화
-def run(app):
+def run():
     wait_for_db()   # DB 커넥션 기다리기
     initialize_db()     # 테이블 생성
     load_data()     # 데이터 로드
