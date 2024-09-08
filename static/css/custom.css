@@ -154,3 +154,19 @@ body {
     background-color: rgb(0,0,0,0.2);
     z-index: 10;
 }
+
+.write-btn-wrapper {
+    display: flex;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+    margin-left: 60px;
+    margin-bottom: 30px;
+}
+
+.write-btn-wrapper #write-btn {
+    /*margin-top: 10rem;*/
+    display: flex;
+
+
+}

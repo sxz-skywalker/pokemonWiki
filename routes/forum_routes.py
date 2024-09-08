@@ -5,17 +5,18 @@ from models.document_type import DocumentType, convert
 forum_route = Blueprint('forum', __name__)
 
 
+# 포럼 메인 페이지
 @forum_route.route('/')
 def main_forum():
     return render_template('forum.html')
 
 
+# 포럼 상세 조회 페이지
 @forum_route.route('/<int:id>', defaults={'type': None})
 @forum_route.route('/create', defaults={'type': 'create', 'id': None})
 @forum_route.route('/<string:type>/<int:id>')
 def detail_forum(type, id):
     connection = make_connection()
-    print('type!!', type)
     doc_type = convert(DocumentType, type)
     item = {}
     try:
@@ -31,7 +32,7 @@ def detail_forum(type, id):
                                show_back_btn=True)
 
 
-# 게시글 목록 조회
+# 포럼 목록 조회 API
 @forum_route.route('/list', methods=['GET'])
 def get_forum_list():
 
@@ -50,10 +51,11 @@ def get_forum_list():
 
     try:
         with connection.cursor() as cursor:
-            # 리스트 조회
+            # 기본 SQL
             base_sql = "SELECT * FROM forum"
             count_sql = "SELECT COUNT(*) FROM forum"
 
+            # 검색 쿼리가 있는 경우
             if query:
                 if search_type:
                     filter_sql = f" WHERE {search_type} LIKE %s"

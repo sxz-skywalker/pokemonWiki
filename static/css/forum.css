@@ -165,7 +165,8 @@
 }
 
 .search-body .search-result .result-header .records {
-  color: #3c4142;
+  color: #737373;
+  margin-top: 10px;
 }
 
 .search-body .search-result .result-header .result-actions {
@@ -237,9 +238,14 @@
 
 .page-item.active .page-link {
     z-index: 3;
-    color: #fff;
-    background-color: #FFBE98; /*DAF1DE*/
-    border-color: #FFBE98;
+    background-color: white;
+    color: #F0A599;
+    border: 1px solid #dee2e6;
+    font-weight: 800;
+}
+
+.page-item.disabled .page-link{
+    color: #B6B6B6;
 }
 
 .page-link {
@@ -280,13 +286,14 @@
 }
 
 .create-icon {
+    padding-top: 10px;
+    padding-bottom: 8px;
     color: #c5c5c5;
-    margin-right: 20px;
-    font-size: 20px;
-    padding: 8px;
+    font-size: 23px;
+    font-weight: 700;
     border-radius: 5px;
-    /*border: 1px solid #dee2e6;*/
     background-color: white;
+    margin-right: -20px;
 }
 
 .create-icon-btn, .create-icon-btn:focus {
@@ -295,10 +302,6 @@
   background-color: inherit ;
   cursor: pointer;
   display: flex;
-}
-
-.pagination {
-    margin-left: 40px;
 }
 
 .detail-title {

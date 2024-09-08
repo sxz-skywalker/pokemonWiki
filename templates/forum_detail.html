@@ -80,11 +80,10 @@
 <script src="{{ url_for('static', filename='js/api/forum.js') }}"></script>
 <script>
 $(() => {
-
     const item = {{ item|tojson }};
     const docType = "{{ doc_type.value }}";
     console.log('item', item)
-    initForumDetail(item, docType);
+    forumDetailWorker.initForumDetail(item, docType);
 })
 </script>
 {% endblock %}
