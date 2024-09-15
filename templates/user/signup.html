@@ -1,0 +1,94 @@
+{% extends 'layout/layout.html' %}
+
+{% block head %}
+    <link href="{{ url_for('static', filename='css/form.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="container form">
+    <form id="signup-form" class="form-detail pixelify-sans">
+        <div class="form-group">
+            <div class="input-group required">
+                <label for="id">ID</label>
+                <div class="button-group">
+                    <input type="text" id="id" name="id" required maxlength="20">
+                    <button type="button" class="button-pixel pixelify-sans" id="check-id-btn" data-type="CREATE, UPDATE">
+                        check
+                    </button>
+                </div>
+            </div>
+            <div class="error hidden" id="id-error"><span></span></div>
+        </div>
+
+        <div class="form-group">
+            <div class="input-group required">
+                <label for="name">NAME</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="error hidden" id="name-error"><span></span></div>
+        </div>
+
+        <div class="form-group">
+            <div class="input-group required">
+                <label for="password">PASSWORD</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="error hidden" id="password-error"><span></span></div>
+        </div>
+
+        <div class="form-group">
+            <div class="input-group required">
+                <label for="confirm-password">CONFIRM PASSWORD</label>
+                <input type="password" id="confirm-password" name="confirm-password" required>
+            </div>
+            <div class="error hidden" id="confirm-password-error"><span></span></div>
+        </div>
+
+        <div class="form-group">
+            <div class="input-group required">
+                <label for="email">EMAIL</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="error hidden" id="email-error"><span></span></div>
+        </div>
+
+        <div class="form-group">
+            <div class="input-group">
+                <label for="school">SCHOOL</label>
+                <input type="text" id="school" name="school">
+            </div>
+            <div class="error hidden" id="school-error"><span></span></div>
+        </div>
+
+        <!-- 파일 업로드 -->
+        <div class="form-group">
+            <div class="input-group">
+                <label for="photo-file">PHOTO</label>
+                <input type="file" id="photo-file" name="photo-file" hidden="true">
+                <div class="button-group">
+                    <input type="text" class="file-name" id="photo-file-name" name="photo-file-name" required accept="image/*">
+                    <button type="button" class="button-pixel pixelify-sans" id="file-add-btn">
+                        attach
+                    </button>
+                </div>
+            </div>
+            <div class="error hidden" id="file-error"><span></span></div>
+        </div>
+
+        <button type="button" class="button-pixel pixelify-sans submit" id="submit-btn">
+            signup
+        </button>
+    </form>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/api/file.js') }}"></script>
+<script src="{{ url_for('static', filename='js/api/user.js') }}"></script>
+<script src="{{ url_for('static', filename='js/signup.js') }}"></script>
+<script>
+$(() => {
+    signupWorker.init();
+})
+</script>
+{% endblock %}

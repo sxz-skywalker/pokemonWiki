@@ -1,0 +1,57 @@
+{% extends 'layout/layout.html' %}
+
+{% block head %}
+    <link href="{{ url_for('static', filename='css/form.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="container form">
+    <form id="detail-form" class="form-detail pixelify-sans detail-form">
+        <div class="image-wrapper">
+            <img class="profile-image" src="{{ url_for('static', filename='upload/' + pers.file_name) }}">
+        </div>
+
+        <div class="form-group">
+            <div class="input-group">
+                <label for="id">ID</label>
+                <input type="text" id="id" name="id" required maxlength="20" value="{{ pers.id }}" disabled>
+            </div>
+            <div class="error hidden" id="id-error"><span></span></div>
+        </div>
+        <div class="form-group">
+            <div class="input-group required">
+                <label for="name">NAME</label>
+                <input type="text" id="name" name="name" required value="{{ pers.name }}" disabled>
+            </div>
+            <div class="error hidden" id="name-error"><span></span></div>
+        </div>
+
+        <div class="form-group">
+            <div class="input-group required">
+                <label for="email">EMAIL</label>
+                <input type="email" id="email" name="email" required value="{{ pers.email }}" disabled>
+            </div>
+            <div class="error hidden" id="email-error"><span></span></div>
+        </div>
+
+        <div class="form-group">
+            <div class="input-group">
+                <label for="school">SCHOOL</label>
+                <input type="text" id="school" name="school" value="{{ pers.school }}" disabled>
+            </div>
+            <div class="error hidden" id="school-error"><span></span></div>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/api/file.js') }}"></script>
+<script src="{{ url_for('static', filename='js/api/pers.js') }}"></script>
+<script src="{{ url_for('static', filename='js/my_info.js') }}"></script>
+<script>
+$(() => {
+    myInfoWorker.init({{ user | tojson }});
+})
+</script>
+{% endblock %}

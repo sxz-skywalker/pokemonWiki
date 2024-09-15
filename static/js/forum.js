@@ -97,9 +97,12 @@ const forumListWorker = {
         const html = list?.map(e => {
             return template.replaceAll('#ID#', e.id)
                 .replaceAll('#CATEGORY#', categories.find(v => v.value === e.category)?.text)
+                .replaceAll('#PATH#', e.has_password ? 'password/' : '')
                 .replaceAll('#CATEGORY_ID#', e.category)
                 .replaceAll('#TITLE#', e.title)
                 .replaceAll('#NAME#', e.name)
+                .replaceAll('#PRIVATE#', e.has_password ? 'private' : '')
+                .replaceAll('#LOCK#', e.has_password ? 'lock-icon' : 'lock-icon hidden')
                 .replaceAll('#CREATE_DATE#', moment(e.create_date).format('YYYY/MM/DD HH:mm:ss'))
         })
         $('.result-table').html(html.join(''));
@@ -137,16 +140,20 @@ const forumListWorker = {
 const forumDetailWorker = {
     data: {
         id: undefined,
+        user_id: '',
+        file_id: '',
         name: '',
         title: '',
         content: '',
         category: '',
+        password: '',
     },
     adjustDocType: (docType) => {
-        $('.create-form-buttons button').hide();
+        $('.type-el').hide();
         $('[data-type*="' + docType + '"]').show();
+        // $('.type-el [data-type!="' + docType + '"]').remove();
     },
-    initForumDetail: (item, docType) => {
+    initForumDetail: (item, user, docType) => {
         // 문서 타입에 맞게 초기화
         forumDetailWorker.adjustDocType(docType);
 
@@ -160,9 +167,26 @@ const forumDetailWorker = {
         });
 
         // input 초기화
-        $('#title, #content, #name').on('input, change', (e) => {
+        $('#title, #content, #name, #password').on('input, change', (e) => {
             forumDetailWorker.data[e.target.id] = e.target.value;
             forumDetailWorker.check();
+        });
+
+        // 파일 첨부 버튼 초기화
+        $('.file-add-input').off().on('click', () => {
+            console.log(docType)
+            if(docType === DOC_TYPE.READ) {
+                downloadFile(forumDetailWorker.data.file_id)
+            } else {
+                $("#file").click();
+            }
+        });
+        // 파일 추가 이벤트
+        $('#file').on('change', function() {
+            const file = this.files[0];
+            if (file) {
+                $('.file-add-input').val(file.name);
+            }
         });
 
         // 버튼 초기화 - 글쓰기, 수정, 삭제
@@ -194,11 +218,18 @@ const forumDetailWorker = {
                 ...item
             }
             $("#title").val(item.title);
-            $("#name").val(item.name);
+            $("input[name='name']").val(item.name);
             $("#content").val(item.content);
             $("#category-select").val(item.category);
+            $(".file-add-input").val(item.file_name);
         } else {
             // 유효성 체크
+            if(docType === DOC_TYPE.CREATE) {
+                $("input[name='name']").val(user.name);
+                forumDetailWorker.data.name = user.name;
+            } else {
+                $(".file-add-input").val(item.file_name);
+            }
             forumDetailWorker.check();
         }
 
@@ -207,6 +238,10 @@ const forumDetailWorker = {
     changeReadAndWrite: (isRead) => {
         const els = $('.forum-detail input, .forum-detail textarea, .forum-detail select');
         els.attr('disabled', isRead);
+        if(isRead) {
+            $('.file-add-input ').attr('disabled', false);
+            $('input[name="name"]').attr('disabled', false);
+        }
         els.attr('placeholder', '');
     },
     // 유효성 체크
@@ -217,11 +252,11 @@ const forumDetailWorker = {
         isValid ? el.removeClass("disabled") : el.addClass("disabled")
     },
     // 글쓰기
-    addForum: () => {
-        insertForum(forumDetailWorker.data.name,
-            forumDetailWorker.data.title,
-            forumDetailWorker.data.category,
-            forumDetailWorker.data.content, (res) => {
+    addForum: async () => {
+        const file_id = await forumDetailWorker.uploadFile();
+        if(!file_id) return;
+        forumDetailWorker.data.file_id = file_id
+        insertForum(forumDetailWorker.data, async (res) => {
             if(res === 200) {
                 location.href = '/forums'
             }
@@ -243,6 +278,18 @@ const forumDetailWorker = {
         }), (error) => {
             console.log('An error occurred while writing', error);
         };
+    },
+    // 파일 업로드
+    uploadFile: async () => {
+        const formData = new FormData();
+        const file = $('#file')[0].files[0];
+        formData.append('file', file);
+        return await uploadFile(formData);
+    },
+    // 유저프로필로 이동
+    goPropfile: () => {
+        const userId = forumDetailWorker.data.user_id
+        location.href = `/users/profile/${userId}`;
     }
 }
 

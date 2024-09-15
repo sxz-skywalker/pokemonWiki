@@ -1,0 +1,115 @@
+{% extends 'layout/layout.html' %}
+
+{% block head %}
+    <link href="{{ url_for('static', filename='css/forum.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="container forum-detail suse">
+    <div class="forum-detail-wrapper">
+        <div class="row">
+            <div class="col-lg-12 card-margin">
+                <div class="card create-form">
+                    <div class="card-body p-0">
+                        <div class="row type-el" data-type="READ">
+                            <div class="col-12">
+                                <div class="col-lg-12 col-md-12 col-sm-12 p-0">
+                                    <input id="name" name="name" type="text" placeholder="Please enter the name" readonly="true" onclick="forumDetailWorker.goPropfile()"/>
+                                </div>
+                                <div></div>
+                            </div>
+                        </div>
+                        <div class="row type-el" data-type="CREATE, UPDATE">
+                            <div class="col-lg-9 col-md-9 col-sm-9">
+                                <input id="name" type="text" name="name" class="form-control" placeholder="name" readonly="true"/>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                <input id="password" type="password" class="form-control" placeholder="password" maxlength="8"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 card-margin">
+            <div class="card create-form">
+                <div class="card-body p-0">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="row no-gutters detail-title">
+                                <div class="col-lg-9 col-md-9 col-sm-12 p-0">
+                                    <input id="title" type="text" placeholder="Please enter the title" />
+                                </div>
+                                <div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 card-margin">
+            <div class="card create-form">
+                <div class="card-body p-0">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="row no-gutters detail-title">
+                                <textarea id="content" rows="15" placeholder="Please enter the content"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 card-margin">
+            <div class="card create-form">
+                <div class="card-body p-0">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="row no-gutters detail-title">
+                                <div class="col-lg-9 col-md-9 col-sm-12 p-0">
+                                    <input id="file" type="file" hidden/>
+                                    <input class=" file-add-input" type="text" placeholder="Attach a file.." readonly/>
+                                </div>
+                                <div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="create-form-buttons">
+        <button class="button-pixel pixelify-sans type-el" id="write-btn" data-type="CREATE, UPDATE">
+            write
+        </button>
+        <button class="button-pixel pixelify-sans type-el" id="modify-btn" data-type="READ">
+            modify
+        </button>
+        <button class="button-pixel pixelify-sans type-el" id="delete-btn" data-type="READ">
+            delete
+        </button>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/api/file.js') }}"></script>
+<script src="{{ url_for('static', filename='js/forum.js') }}"></script>
+<script src="{{ url_for('static', filename='js/api/forum.js') }}"></script>
+<script>
+$(() => {
+    const item = {{ item|tojson }};
+    console.log(item)
+    const user = {{ user|tojson }};
+    const docType = "{{ doc_type.value }}";
+    forumDetailWorker.initForumDetail(item, user, docType);
+})
+</script>
+{% endblock %}

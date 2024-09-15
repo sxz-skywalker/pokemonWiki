@@ -1,0 +1,42 @@
+{% extends 'layout/layout.html' %}
+
+{% block head %}
+    <link href="{{ url_for('static', filename='css/form.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="container form">
+    <form id="login-form" class="form-detail pixelify-sans md-form">
+        <div class="form-group">
+            <div class="input-group required">
+                <label for="id">ID</label>
+                <input type="text" id="id" name="id" required maxlength="20">
+            </div>
+            <div class="error hidden" id="id-error"><span></span></div>
+        </div>
+
+        <div class="form-group">
+            <div class="input-group required">
+                <label for="password">PASSWORD</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="error hidden" id="password-error"><span></span></div>
+            <div class="error hidden" id="login-error"><span></span></div>
+        </div>
+
+        <button type="button" class="button-pixel pixelify-sans submit" id="submit-btn">
+            login
+        </button>
+    </form>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/api/auth.js') }}"></script>
+<script src="{{ url_for('static', filename='js/auth.js') }}"></script>
+<script>
+$(() => {
+    authWorker.init();
+})
+</script>
+{% endblock %}

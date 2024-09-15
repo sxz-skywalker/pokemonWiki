@@ -114,6 +114,22 @@ body {
     justify-content: end;
     margin: 10px;
 }
+.menu-user {
+    display: flex;
+    gap: 10px;
+    flex-direction: row;
+    justify-content: end;
+    margin: 20px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    color: red;
+}
+
+.menu-user button {
+    color: gray;
+    font-size: 20px;
+}
 
 .st-h3 {
     padding-left: 30px;

@@ -52,6 +52,7 @@
 .widget-26 .operator {
   min-width: 100px;
   font-weight: 400;
+  margin-top:4px;
 }
 
 .widget-26 .operator p {
@@ -69,6 +70,7 @@
   font-weight: 400;
   color: #3c4142;
   font-size: 0.8125rem;
+  margin-top: 4px;
 }
 
 .widget-26 .widget-26-job-starred svg {
@@ -112,6 +114,12 @@
   padding: 1rem;
   height: 100%;
   font-size: 1rem;
+}
+
+.search-form input[readonly='true'],
+.create-form input[readonly='true'] {
+    background-color: transparent;
+    border-radius: 8px;
 }
 
 .search-form select, .create-form select{
@@ -333,7 +341,7 @@
 }
 
 .forum-detail-wrapper {
-    margin-top: 15rem;
+    margin-top: 10rem;
     display: flex;
     flex-direction: column;
     align-content: center;
@@ -356,4 +364,22 @@
     width: 100%;
     text-align: center;
     color: #6c757d;
+}
+
+input[type='password'],
+input[type='password']::placeholder {
+    text-align: center;
+}
+
+.title.private a {
+    color: #bfbfbf;
+}
+
+.lock-icon{
+    color: #bfbfbf;
+    vertical-align: sub;
+    margin-right: 3px;
+}
+.lock-icon.hidden{
+    display: none;
 }

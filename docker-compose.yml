@@ -8,7 +8,7 @@ services:
       MYSQL_ROOT_PASSWORD: ${DATABASE_PASSWORD}
       MYSQL_DATABASE: ${DATABASE_SCHEMA}
     ports:
-      - "3306:3306"
+      - "3307:3306"
     volumes:
       - db_data:/var/lib/mysql
 
@@ -16,7 +16,7 @@ services:
     build: .
     container_name: pokemon_web
     ports:
-      - "5001:5000"
+      - "5002:5000"
     environment:
       # sceret key 생성 python -c 'import secrets; print(secrets.token_hex())'
       - SECRET_KEY=${SECRET_KEY}
@@ -27,6 +27,7 @@ services:
       - db
     volumes:
       - .:/app
+      - ./upload:/upload # 파일 업로드 저장소
 
 volumes:
   db_data:

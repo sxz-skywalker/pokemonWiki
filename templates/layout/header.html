@@ -1,6 +1,6 @@
 <div class="menu-header">
     {% if show_back_btn is defined %}
-        <button onclick="location.href='/forums'"><ion-icon name="arrow-back" class="back-btn"></ion-icon></button>
+        <button onclick="history.go(-1);"><ion-icon name="arrow-back" class="back-btn"></ion-icon></button>
     {% endif %}
     <button style="float: right;"><ion-icon name="menu" class="menu-open-btn "></ion-icon></button>
 </div>
@@ -12,9 +12,17 @@
         <li><a href="/pokemons">Wiki</a></li>
         <li><a href="/forums">Forum</a></li>
     </ul>
+    <div class="menu-user">
+        {% if user %}
+            <button><ion-icon name="person" id="user-btn"></ion-icon></button>
+            <button><ion-icon name="log-out" id="logout-btn"></ion-icon></button>
+        {% else %}
+            <button><ion-icon name="log-in" id="login-btn"></ion-icon></button>
+        {% endif %}
+    </div>
 </div>
 <div class="overlay"></div>
-
+<script src="{{ url_for('static', filename='js/api/auth.js') }}"></script>
 <script>
 
 const toggleMenu = () => {
@@ -35,6 +43,25 @@ $(() => {
     isShowBackBtn ? $('.show_back_btn').show() : $('.show_back_btn').hide();
     $('.menu-header').css('justify-content', isShowBackBtn ? 'space-between' : 'end');
 
+
+    $("#login-btn").off('click').on('click', () => {
+        toggleMenu();
+        location.href = '/auth/login';
+    });
+
+    $("#logout-btn").off('click').on('click', async () => {
+        const res = await logoutUser()
+        console.log('res', res)
+        if(res === 200) {
+          location.href = '/auth/login'
+        }
+    });
+
+    $("#user-btn").off('click').on('click', async () => {
+        toggleMenu();
+        // 내 정보 수정으로 이동
+        location.href = '/users/my-info'
+    });
 });
 
 </script>

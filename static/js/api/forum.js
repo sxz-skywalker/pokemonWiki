@@ -25,17 +25,12 @@ const getForumDetail = (id, onSuccess, onError) => {
 };
 
 // 게시글 생성
-const insertForum = (name, title, category, content, onSuccess, onError) => {
+const insertForum = (data, onSuccess, onError) => {
     $.ajax({
         url: '/forums',
         type: 'POST',
         contentType: 'application/json',
-        data: JSON.stringify({
-            name: name,
-            title: title,
-            category: category,
-            content: content
-        }),
+        data: JSON.stringify(data),
         success: onSuccess,
         error: onError
     });

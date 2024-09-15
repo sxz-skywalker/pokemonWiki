@@ -1,14 +1,14 @@
-from flask import Blueprint, render_template, request, jsonify
+from flask import Blueprint, render_template, request, jsonify, session, redirect, url_for
 from utils.db_intializer import make_connection
 from models.document_type import DocumentType, convert
 
 forum_route = Blueprint('forum', __name__)
-
+forum_private_id = 'forum_private_id'
 
 # 포럼 메인 페이지
 @forum_route.route('/')
 def main_forum():
-    return render_template('forum.html')
+    return render_template('forum/index.html')
 
 
 # 포럼 상세 조회 페이지
@@ -21,20 +21,39 @@ def detail_forum(type, id):
     item = {}
     try:
         with connection.cursor() as cursor:
-            sql = "SELECT * FROM forum WHERE id = %s"
+            sql = """
+                SELECT f.id, f.name, f.user_id, f.title, f.category, f.content,
+                    CASE WHEN f.password IS NOT NULL AND f.password != '' THEN 1 ELSE 0 END AS has_password, 
+                    f.file_id, f.create_date, f.update_date, ff.name as file_name, ff.path 
+                FROM forum f 
+                LEFT JOIN files ff ON f.file_id = ff.id
+                WHERE f.id = %s
+            """
             cursor.execute(sql, (id,))
             item = cursor.fetchone()
+            if item is not None and item.get('has_password') == 1:
+                if session.get(forum_private_id) is None or session.get(forum_private_id) != id:
+                    return redirect(url_for('forum.main_forum'))
+            return render_template('forum/detail.html',
+               item=item,
+               doc_type=doc_type if doc_type is not None else DocumentType.READ,
+               show_back_btn=True)
     finally:
         connection.close()
-        return render_template('forum_detail.html',
-                               item=item,
-                               doc_type=doc_type if doc_type is not None else DocumentType.READ,
-                               show_back_btn=True)
+
+
+
+
+@forum_route.route('/password/<int:id>')
+def password_page(id):
+    session.pop(forum_private_id, None)
+    return render_template('forum/password.html', id=id)
 
 
 # 포럼 목록 조회 API
 @forum_route.route('/list', methods=['GET'])
 def get_forum_list():
+    session.pop(forum_private_id, None)
 
     query = request.args.get('query', '')
     search_type = request.args.get('type', '')
@@ -52,7 +71,13 @@ def get_forum_list():
     try:
         with connection.cursor() as cursor:
             # 기본 SQL
-            base_sql = "SELECT * FROM forum"
+            base_sql = """
+                SELECT 
+                    id, user_id, name, title, category, 
+                    CASE WHEN password IS NOT NULL AND password != '' THEN 1 ELSE 0 END AS has_password, 
+                    file_id, create_date, update_date, content 
+                FROM forum
+            """
             count_sql = "SELECT COUNT(*) FROM forum"
 
             # 검색 쿼리가 있는 경우
@@ -91,21 +116,22 @@ def get_forum_list():
 # 게시글 생성/수정
 @forum_route.route('/', methods=['POST'])
 def update_forum():
-    data = request.json
+    d = request.json
+    user_id = session['user']['id']
     connection = make_connection()
     try:
         with connection.cursor() as cursor:
             # id가 있으면 update
-            if 'id' in data:
+            if 'id' in d:
                 sql = """
-                UPDATE forum SET name=%s, category=%s, title=%s, content=%s, update_date=CURRENT_TIMESTAMP WHERE id=%s
+                UPDATE forum SET name=%s, user_id=%s, category=%s, title=%s, file_id=%s, password=%s, content=%s, update_date=CURRENT_TIMESTAMP WHERE id=%s
                 """
-                cursor.execute(sql, (data['name'], data['category'], data['title'], data['content'], data['id']))
+                cursor.execute(sql, (d.get('name'), user_id, d.get('category'), d.get('title'), d.get('file_id'), d.get('password'), d.get('content'), d.get('id')))
             else:
                 sql = """
-                INSERT INTO forum (name, category, title, content) VALUES (%s, %s, %s, %s)
+                INSERT INTO forum (name, user_id, category, title, file_id, password, content) VALUES (%s, %s, %s, %s, %s, %s, %s)
                 """
-                cursor.execute(sql, (data['name'], data['category'], data['title'], data['content']))
+                cursor.execute(sql, (d.get('name'), user_id, d.get('category'), d.get('title'), d.get('file_id'), d.get('password'), d.get('content')))
         connection.commit()
         return jsonify(200)
     finally:
@@ -121,6 +147,28 @@ def delete_forum(id):
             sql = "DELETE FROM forum WHERE id = %s"
             cursor.execute(sql, (id,))
         connection.commit()
+        return jsonify(200)
+    finally:
+        connection.close()
+
+
+# 게시글의 비밀번호 확인
+@forum_route.route('/check-password/<int:id>', methods=['POST'])
+def check_forum_password(id):
+    data = request.json
+    check_password = data.get('password')
+    connection = make_connection()
+    try:
+        with connection.cursor() as cursor:
+            # 게시글의 비밀번호 조회
+            sql = "SELECT password FROM forum WHERE id = %s AND password IS NOT NULL"
+            cursor.execute(sql, (id,))
+            forum = cursor.fetchone()
+
+            # 비밀번호 확인
+            if forum['password'] != check_password:
+                return jsonify(403)
+        session[forum_private_id] = id
         return jsonify(200)
     finally:
         connection.close()

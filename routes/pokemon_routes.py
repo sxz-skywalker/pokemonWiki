@@ -7,4 +7,4 @@ pokemon_route = Blueprint('pokemon', __name__)
 @pokemon_route.route('/')
 def list_pokemon():
     pokemons = get_pokemons()
-    return render_template('pokemon.html', pokemons=pokemons)
+    return render_template('pokemon/index.html', pokemons=pokemons)
