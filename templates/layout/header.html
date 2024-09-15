@@ -18,6 +18,7 @@
             <button><ion-icon name="log-out" id="logout-btn"></ion-icon></button>
         {% else %}
             <button><ion-icon name="log-in" id="login-btn"></ion-icon></button>
+            <button><ion-icon name="add" id="add-btn"></ion-icon></button>
         {% endif %}
     </div>
 </div>
@@ -61,6 +62,12 @@ $(() => {
         toggleMenu();
         // 내 정보 수정으로 이동
         location.href = '/users/my-info'
+    });
+
+    $("#add-btn").off('click').on('click', async () => {
+        toggleMenu();
+        // 내 정보 수정으로 이동
+        location.href = '/users/signup'
     });
 });
 

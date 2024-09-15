@@ -30,11 +30,8 @@ const authWorker = {
         // 로그인 버튼 초기화
         $('#submit-btn').on('click', (e) => {
             const data = authWorker.getData();
-            const result = authWorker.validate(data, rules);
-            if(result) {
-                $('.error').addClass('hidden');
-                authWorker.login();
-            }
+            authWorker.login();
+
         });
     },
     getData: () => {
@@ -46,7 +43,14 @@ const authWorker = {
     // 유효성 초기화
     initValidate: () => {
         // validate 확장
-        validate.validators.checkFailed = () => authWorker.isLoginFailed ? rules.login.checkFailed : '';
+        validate.validators.checkFailed = () => {
+            if(!authWorker.isLoginFailed) {
+                $(`#login-error span`).text('');
+                $(`#login-error`).addClass('hidden');
+                return;
+            }
+            return rules.login.checkFailed;
+        }
     },
     validate: (data, rules) => {
         console.log('data', data)

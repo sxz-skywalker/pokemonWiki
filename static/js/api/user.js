@@ -4,6 +4,7 @@ const checkId = (id, onSuccess, onError) => {
         url: '/users/check-id',
         type: 'GET',
         data: { id: id },
+        cache: false,
         success: onSuccess,
         error: onError
     });

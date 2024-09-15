@@ -101,8 +101,15 @@ const signupWorker = {
     // 유효성 초기화
     initValidate: () => {
         // validate 확장
-        validate.validators.isIdNotChecked = () => signupWorker.isIdNotChecked ? rules.id.isIdNotChecked : ''
-        validate.validators.isIdDuplicated = () => signupWorker.isIdDuplicated ? rules.id.isIdDuplicated : '';
+        validate.validators.isIdNotChecked = () => signupWorker.isIdNotChecked ? rules.id.isIdNotChecked : null;
+        validate.validators.isIdDuplicated = () => {
+            if(!signupWorker.isIdDuplicated) {
+                $(`#id-error span`).text('');
+                $(`#id-error`).addClass('hidden');
+                return;
+            }
+            return rules.id.isIdDuplicated;
+        }
     },
     // 유효성 검사
     validate: (data, rules) => {
