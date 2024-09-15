@@ -21,6 +21,7 @@ def detail_forum(type, id):
     item = {}
     try:
         with connection.cursor() as cursor:
+            # 파일 테이블과 조인
             sql = """
                 SELECT f.id, f.name, f.user_id, f.title, f.category, f.content,
                     CASE WHEN f.password IS NOT NULL AND f.password != '' THEN 1 ELSE 0 END AS has_password, 
@@ -31,6 +32,7 @@ def detail_forum(type, id):
             """
             cursor.execute(sql, (id,))
             item = cursor.fetchone()
+            # 비밀글 접근 권한 체크
             if item is not None and item.get('has_password') == 1:
                 if session.get(forum_private_id) is None or session.get(forum_private_id) != id:
                     return redirect(url_for('forum.main_forum'))
@@ -42,10 +44,10 @@ def detail_forum(type, id):
         connection.close()
 
 
-
-
+# 비밀글 접근 권한 체크 페이지
 @forum_route.route('/password/<int:id>')
 def password_page(id):
+    # 세션에 있는 비밀글 접근 권한 정보 만료
     session.pop(forum_private_id, None)
     return render_template('forum/password.html', id=id)
 
@@ -53,6 +55,7 @@ def password_page(id):
 # 포럼 목록 조회 API
 @forum_route.route('/list', methods=['GET'])
 def get_forum_list():
+    # 세션에 있는 비밀글 접근 권한 정보 만료
     session.pop(forum_private_id, None)
 
     query = request.args.get('query', '')
@@ -70,7 +73,7 @@ def get_forum_list():
 
     try:
         with connection.cursor() as cursor:
-            # 기본 SQL
+            # 파일 테이블과 조인
             base_sql = """
                 SELECT 
                     id, user_id, name, title, category, 

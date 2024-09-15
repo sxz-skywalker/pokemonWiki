@@ -1,5 +1,4 @@
 // 파일 업로드
-// 파일 업로드 함수 (async/await)
 const uploadFile = async (formData) => {
     try {
         const response = await $.ajax({

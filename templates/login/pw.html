@@ -1,0 +1,48 @@
+{% extends 'layout/layout.html' %}
+
+{% block head %}
+    <link href="{{ url_for('static', filename='css/form.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="container form">
+    <form id="login-form" class="form-detail pixelify-sans md-form">
+        <div class="form-group">
+            <div class="input-group required">
+                <label for="email">ID</label>
+                <input type="text" id="id" name="id" required maxlength="20">
+            </div>
+            <div class="error hidden" id="id-error"><span></span></div>
+        </div>
+        <div class="form-group">
+            <div class="input-group required">
+                <label for="email">EMAIL</label>
+                <input type="text" id="email" name="email" required maxlength="100">
+            </div>
+            <div class="error hidden" id="email-error"><span></span></div>
+        </div>
+
+        <button type="button" class="button-pixel pixelify-sans submit" id="submit-btn">
+            send
+        </button>
+    </form>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+$(() => {
+    // 아이디 찾기
+    $('#submit-btn').on('click', async() => {
+        const res = await findPassword({
+            id: $("#id").val(),
+            email: $("#email").val(),
+        })
+        if(res === 200) {
+            alert('Un email has sent.');
+            location.href = '/auth/login';
+        }
+    });
+})
+</script>
+{% endblock %}

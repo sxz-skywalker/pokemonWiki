@@ -63,30 +63,3 @@ def download_file(id):
         connection.close()
 
 
-
-# 파일 다운로드 및 브라우저에 이미지로 표시
-@file_route.route('/image/<int:id>', methods=['GET'])
-def get_image(id):
-    connection = make_connection()
-    try:
-        with connection.cursor() as cursor:
-            # 파일 경로를 DB에서 조회
-            sql = "SELECT name, path FROM files WHERE id = %s"
-            cursor.execute(sql, (id,))
-            file_data = cursor.fetchone()
-
-            if not file_data:
-                return jsonify({'error': 'File not found'}), 404
-
-            name = file_data['name']
-            file_path = file_data['path']  # 파일 경로
-
-            # 파일 존재 여부 확인
-            if not os.path.exists(file_path):
-                return jsonify({'error': 'File not found on server'}), 404
-
-            # 이미지를 inline으로 브라우저에 표시
-            return send_from_directory(directory=os.path.dirname(file_path), filename=name, as_attachment=False)
-
-    finally:
-        connection.close()

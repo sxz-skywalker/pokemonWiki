@@ -24,15 +24,24 @@
             <div class="error hidden" id="login-error"><span></span></div>
         </div>
 
-        <button type="button" class="button-pixel pixelify-sans submit" id="submit-btn">
-            login
-        </button>
+        <div class="buttons">
+            <button type="button" class="button-pixel pixelify-sans submit" id="submit-btn">
+                login
+            </button>
+            <div class="submit-group">
+                <button type="button" class="button-pixel pixelify-sans submit" id="submit-btn" onclick="location.href='/auth/find-id'">
+                    f/ id
+                </button>
+                <button type="button" class="button-pixel pixelify-sans submit" id="submit-btn" onclick="location.href='/auth/find-pw'">
+                    f/ password
+                </button>
+            </div>
+        </div>
     </form>
 </div>
 {% endblock %}
 
 {% block scripts %}
-<script src="{{ url_for('static', filename='js/api/auth.js') }}"></script>
 <script src="{{ url_for('static', filename='js/auth.js') }}"></script>
 <script>
 $(() => {

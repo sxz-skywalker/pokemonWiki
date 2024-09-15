@@ -168,3 +168,18 @@
 .detail-form input:disabled{
     background-color: white;
 }
+
+.submit-group {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+.submit-group button {
+    height: 70px;
+}
